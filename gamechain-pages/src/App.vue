@@ -38,14 +38,18 @@ import { CloseOutlined, BorderOutlined, LineOutlined, HomeOutlined, AppstoreOutl
 
       <a-divider class="bg-gray-400 m-2" />
 
-      <a-divider class="bg-gray-400 m-2" />
+
+      <div class="flex flex-col items-center bottom-0 absolute [&>*]:m-1">
+        <!-- TODO: Divider Short -->
+        <a-divider class="bg-gray-400 m-2" />
 
       <a-tooltip placement="right">
         <template #title>
           <span>Log in</span>
         </template>
-        <RouterLink to="about"><div class="hover:bg-gray-600 w-10 h-10 rounded-xl inline-grid items-center text-2xl"><UserOutlined /></div></RouterLink>
+        <RouterLink to="auth"><div class="hover:bg-gray-600 w-10 h-10 rounded-xl inline-grid items-center text-2xl"><UserOutlined /></div></RouterLink>
       </a-tooltip>
+      </div>
 
     </div>
     <RouterView class="w-[calc(100vw-56px)] h-[calc(100vh-28px)] overflow-auto" />

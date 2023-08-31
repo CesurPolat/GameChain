@@ -3,7 +3,7 @@ import './assets/style.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import { Divider, Tooltip } from 'ant-design-vue';
+import { Divider, Tooltip, Typography } from 'ant-design-vue';
 
 import App from './App.vue'
 import router from './router'
@@ -14,5 +14,6 @@ app.use(createPinia())
 app.use(router)
 app.use(Divider)
 app.use(Tooltip)
+app.use(Typography)
 
 app.mount('#app')
