@@ -1,22 +1,25 @@
 {
-  "name": "electron-quick-start",
+  "name": "GameChain",
   "version": "1.0.0",
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "i": "concurrently \"cd gamechain-pages && npm i\" \"npm i\"",
+    "start": "concurrently \"cd gamechain-pages && npm run dev\" \"electron .\""
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/CesurPolat/GameChain",
   "keywords": [
     "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "wallet",
+    "desktop",
+    "blockchain"
   ],
-  "author": "GitHub",
+  "author": "CesurPolat",
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^26.0.0"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.1"
   }
 }
