@@ -1,7 +1,3 @@
-<script setup>
+<script setup></script>
 
-</script>
-
-<template>
-  a
-</template>
+<template>a</template>

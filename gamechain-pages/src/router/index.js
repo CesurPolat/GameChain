@@ -21,12 +21,17 @@ const router = createRouter({
       path: '/auth',
       name: 'Auth',
       component: () => import('../views/AuthView.vue')
+    },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: () => import('../views/ProfileView.vue')
     }
   ]
 })
 
-router.afterEach((to)=>{
-  document.title=to.name;
+router.afterEach((to) => {
+  document.title = to.name
 })
 
 export default router
