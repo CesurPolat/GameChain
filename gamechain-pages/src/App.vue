@@ -64,7 +64,7 @@ onMounted(() => {
             <span v-if="_localStorage.account == undefined">Log in</span>
             <span v-else>Profile</span>
           </template>
-
+          <!-- TODO: Router -->
           <RouterLink :to="_localStorage?.account == undefined ? 'auth' : 'profile'"
             ><div class="hover:bg-gray-600 w-10 h-10 rounded-xl inline-grid items-center text-2xl">
               <UserOutlined /></div
@@ -76,4 +76,8 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.anticon{
+  display: inline-block;
+}
+</style>

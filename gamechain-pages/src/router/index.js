@@ -1,5 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import { message } from 'ant-design-vue';
+
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -26,9 +28,17 @@ const router = createRouter({
       path: '/profile',
       name: 'Profile',
       component: () => import('../views/ProfileView.vue')
+    },
+    {
+      path: '/uploadGame',
+      name: 'Upload Game',
+      beforeEnter:((to, from, next)=>{if(localStorage.developer==true){next()}else{message.error({content:()=>"Unauthorized",style:{marginTop:'28px'}})
+    }}),
+      component: () => import('../views/UploadGameView.vue')
     }
   ]
 })
+
 
 router.afterEach((to) => {
   document.title = to.name
