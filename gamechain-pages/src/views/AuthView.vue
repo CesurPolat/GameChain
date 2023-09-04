@@ -16,6 +16,7 @@ export default {
 
           sendTransaction({ method: 'sign', from: resp, message: 'Welcome2GameChain' }).then(
             (result) => {
+              /* TODO: Looks Bad */
               let resultJson = JSON.parse(result)
               if ('result' in resultJson) {
                 if (ethers.utils.verifyMessage('Welcome2GameChain', resultJson.result) == resp) {
