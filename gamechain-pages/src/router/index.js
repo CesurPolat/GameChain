@@ -32,7 +32,8 @@ const router = createRouter({
     {
       path: '/uploadGame',
       name: 'Upload Game',
-      beforeEnter:((to, from, next)=>{if(localStorage.developer==true){next()}else{message.error({content:()=>"Unauthorized",style:{marginTop:'28px'}})
+      /* TODO: Pinia */
+      beforeEnter:((to, from, next)=>{if(localStorage.developer=="true"){next()}else{message.error({content:()=>"Unauthorized",style:{marginTop:'28px'}})
     }}),
       component: () => import('../views/UploadGameView.vue')
     }

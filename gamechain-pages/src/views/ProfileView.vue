@@ -5,6 +5,11 @@ import GUN from 'gun'
 import { RouterLink } from 'vue-router'
 let gun = GUN()
 export default {
+  data(){
+    return {
+      lcStorage:localStorage
+    }
+  },
   methods: {
     BecomeDeveloper: async () => {
       
@@ -24,6 +29,9 @@ export default {
         message.success({content:()=>("Welcome to Dev Team"),style:{marginTop:'28px'}})
         localStorage.developer=true;
       }
+    },
+    clear:()=>{
+      localStorage.clear();
     }
   },
   mounted: () => {
@@ -42,9 +50,10 @@ export default {
   <div>
     <img src="https://via.placeholder.com/150/d32776" class="rounded-full w-24 h-24" />
     <!-- TODO:Call API -->
-    <div class="">
-      <button @click="BecomeDeveloper" v-if="!localStorage.developer">Become Dev</button>
-      <RouterLink to="/uploadGame" v-if="localStorage.developer">Upload Game</RouterLink>
+    <div class="flex flex-col text-left">
+      <a @click="BecomeDeveloper" v-if="!lcStorage.developer">Become Dev</a>
+      <RouterLink to="/uploadGame" v-if="lcStorage.developer">Upload Game</RouterLink>
+      <RouterLink to="/" @click="clear">Log Out!</RouterLink>
     </div>
   </div>
 </template>

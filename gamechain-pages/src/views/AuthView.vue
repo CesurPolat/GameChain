@@ -1,22 +1,49 @@
 <script>
-import { requestAccounts } from 'fireinterface'
-import { message } from 'ant-design-vue';
+import { requestAccounts, sendTransaction } from 'fireinterface'
+import { message } from 'ant-design-vue'
+import GUN from 'gun'
+import SEA from 'gun/sea'
+import { ethers } from 'ethers'
+let gun = GUN()
 
 export default {
   methods: {
     requestAccount: function () {
-      requestAccounts().then((resp)=>{
+      requestAccounts().then((resp) => {
         //TODO: Interface Turn Failed
-        if(resp!="Rejected"){
-          localStorage.account=resp;
-          this.$router.push("profile")
-        }else{
-          message.error({content:()=>"Rejected",style:{marginTop:'28px'}})
+        if (resp != 'Rejected') {
+          //TODO: Combine Request And Sign
+
+          sendTransaction({ method: 'sign', from: resp, message: 'Welcome2GameChain' }).then(
+            (result) => {
+              let resultJson = JSON.parse(result)
+              if ('result' in resultJson) {
+                if (ethers.utils.verifyMessage('Welcome2GameChain', resultJson.result) == resp) {
+                  localStorage.account = resp
+                  this.$router.push('profile')
+                  message.success({
+                    content: () => 'Welcome Back!',
+                    style: { marginTop: '28px' }
+                  })
+
+                  /* TODO: Get Data from GUN.js */
+                } else {
+                  message.error({ content: () => 'Rejected', style: { marginTop: '28px' } })
+                }
+              } else {
+                message.error({ content: () => 'Rejected', style: { marginTop: '28px' } })
+              }
+            }
+          )
+        } else {
+          message.error({ content: () => 'Rejected', style: { marginTop: '28px' } })
         }
       })
     }
   },
-  mounted: function () {}
+  mounted: async () => {
+    console.log(await SEA.pair())
+  }
 }
 </script>
 
