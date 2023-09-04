@@ -43,8 +43,8 @@ export default {
     <img src="https://via.placeholder.com/150/d32776" class="rounded-full w-24 h-24" />
     <!-- TODO:Call API -->
     <div class="">
-      <button @click="BecomeDeveloper">Become Dev</button>
-      <RouterLink to="/uploadGame">Upload Game</RouterLink>
+      <button @click="BecomeDeveloper" v-if="!localStorage.developer">Become Dev</button>
+      <RouterLink to="/uploadGame" v-if="localStorage.developer">Upload Game</RouterLink>
     </div>
   </div>
 </template>
