@@ -1,6 +1,15 @@
 <script>
 //import { UploadProps } from 'ant-design-vue'
 import { PlusOutlined, LoadingOutlined, EyeOutlined, DeleteOutlined } from '@ant-design/icons-vue'
+import { createHelia } from 'helia'
+import { strings } from '@helia/strings'
+import { unixfs } from '@helia/unixfs'
+import { CID } from 'multiformats/cid'
+import {Buffer} from 'buffer';
+
+const helia = await createHelia()
+const fs = unixfs(helia)
+const s = strings(helia)
 
 export default {
   data() {
@@ -32,10 +41,19 @@ export default {
     }
   },
   components: { PlusOutlined, LoadingOutlined, EyeOutlined, DeleteOutlined },
+  mounted: async () => {
+
+  },
   methods: {
     previewFiles(event) {
-      console.log(event.target.files);
-   }
+      const reader = new FileReader()
+      reader.addEventListener('load', async () => {
+        const cid = await fs.addBytes(Buffer.from(reader.result));
+        console.log(cid);
+        this.fileList.push({uid:"sdsds",url:await s.get(cid),status:"done"})
+      })
+      reader.readAsDataURL(event.target.files[0])
+    }
   }
 }
 </script>
@@ -67,7 +85,7 @@ export default {
     @click="$refs.file.click()"
     class="border border-dashed transition-all hover:border-blue-600 rounded-lg w-28 h-28 flex flex-col items-center justify-center m-1"
   >
-    <input type="file" ref="file" style="display: none" @change="previewFiles"/>
+    <input type="file" ref="file" style="display: none" @change="previewFiles" />
     <PlusOutlined />
     Upload
   </div>
