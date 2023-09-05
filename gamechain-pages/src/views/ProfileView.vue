@@ -1,8 +1,8 @@
 <script>
 import { sendTransaction } from 'fireinterface'
 import { message } from 'ant-design-vue';
-import GUN from 'gun'
 import { RouterLink } from 'vue-router'
+import GUN from 'gun'
 let gun = GUN()
 export default {
   data(){

@@ -47,7 +47,7 @@ onMounted(() => {
         <template #title>
           <span>Library</span>
         </template>
-        <RouterLink to="about"
+        <RouterLink to="library"
           ><div class="hover:bg-gray-600 w-10 h-10 rounded-xl inline-grid items-center text-2xl">
             <AppstoreOutlined /></div
         ></RouterLink>

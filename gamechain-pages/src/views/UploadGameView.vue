@@ -5,7 +5,9 @@ import { createHelia } from 'helia'
 import { strings } from '@helia/strings'
 import { unixfs } from '@helia/unixfs'
 import { CID } from 'multiformats/cid'
-import {Buffer} from 'buffer';
+import { Buffer } from 'buffer'
+import GUN from 'gun'
+let gun = GUN()
 
 const helia = await createHelia()
 const fs = unixfs(helia)
@@ -18,39 +20,21 @@ export default {
       previewImage: '',
       previewTitle: '',
 
-      fileList: [
-        {
-          uid: '-1',
-          name: 'image.png',
-          status: 'done',
-          url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-        },
-        {
-          uid: '-xxx',
-          percent: 50,
-          name: 'image.png',
-          status: 'uploading',
-          url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-        },
-        {
-          uid: '-5',
-          name: 'image.png',
-          status: 'error'
-        }
-      ]
+      fileList: []
     }
   },
   components: { PlusOutlined, LoadingOutlined, EyeOutlined, DeleteOutlined },
-  mounted: async () => {
-
-  },
+  mounted: async () => {},
   methods: {
     previewFiles(event) {
       const reader = new FileReader()
       reader.addEventListener('load', async () => {
-        const cid = await fs.addBytes(Buffer.from(reader.result));
-        console.log(cid);
-        this.fileList.push({uid:"sdsds",url:await s.get(cid),status:"done"})
+        const cid = await fs.addBytes(Buffer.from(reader.result))
+        console.log(cid.bytes)
+        gun.get('CesurPolatGames').put({
+          file: [...cid.bytes]
+        })
+        this.fileList.push({ uid: 'sdsds', url: await s.get(cid), status: 'done' })
       })
       reader.readAsDataURL(event.target.files[0])
     }
@@ -62,9 +46,11 @@ export default {
   <div v-for="file in fileList" :key="file.uid" class="m-1 overflow-hidden">
     <div v-if="file.status == 'done'" class="border rounded-lg w-28 h-28 p-1">
       <div
-        class="absolute text-white opacity-0 hover:opacity-100 hover:bg-black hover:bg-opacity-40 w-[102px] h-[102px] flex items-center justify-center [&>*]:m-2"
+        class="absolute text-gray-400 opacity-0 hover:opacity-100 hover:bg-black hover:bg-opacity-40 w-[102px] h-[102px] flex items-center justify-center"
       >
-        <EyeOutlined /><DeleteOutlined />
+        <div class="transition-all hover:[&>*]:text-white [&>*]:m-2">
+          <EyeOutlined /><DeleteOutlined />
+        </div>
       </div>
       <img :src="file.url" />
     </div>
