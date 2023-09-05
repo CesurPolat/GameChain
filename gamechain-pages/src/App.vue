@@ -6,7 +6,7 @@ import {
   LineOutlined,
   HomeOutlined,
   AppstoreOutlined,
-  UserOutlined
+  UserOutlined,
 } from '@ant-design/icons-vue'
 import { onMounted } from 'vue'
 let _localStorage

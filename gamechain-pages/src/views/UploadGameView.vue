@@ -1,100 +1,75 @@
-<script >
+<script>
 //import { UploadProps } from 'ant-design-vue'
-import { PlusOutlined } from '@ant-design/icons-vue'
-
+import { PlusOutlined, LoadingOutlined, EyeOutlined, DeleteOutlined } from '@ant-design/icons-vue'
 
 export default {
-    data(){
-        return{
-            previewVisible:false,
-            previewImage:'',
-            previewTitle:'',
+  data() {
+    return {
+      previewVisible: false,
+      previewImage: '',
+      previewTitle: '',
 
-            fileList:[{
-      uid: '-1',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    },
-    {
-      uid: '-2',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    },
-    {
-      uid: '-3',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    },
-    {
-      uid: '-4',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    },
-    {
-      uid: '-xxx',
-      percent: 50,
-      name: 'image.png',
-      status: 'uploading',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    },
-    {
-      uid: '-5',
-      name: 'image.png',
-      status: 'error'
-    }]
+      fileList: [
+        {
+          uid: '-1',
+          name: 'image.png',
+          status: 'done',
+          url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+        },
+        {
+          uid: '-xxx',
+          percent: 50,
+          name: 'image.png',
+          status: 'uploading',
+          url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+        },
+        {
+          uid: '-5',
+          name: 'image.png',
+          status: 'error'
         }
-    },
-  methods: {
-    getBase64: (file) => {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader()
-        reader.readAsDataURL(file)
-        reader.onload = () => resolve(reader.result)
-        reader.onerror = (error) => reject(error)
-      })
-    },
-    handleCancel: () => {
-      this.previewVisible = false
-      this.previewTitle = ''
-    },
-    handlePreview: async (file) => {
-
-      if (!file.url && !file.preview) {
-        file.preview = await this.getBase64(file.originFileObj)
-      }
-      this.previewImage = "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-      this.previewVisible = true
-      this.previewTitle = file.name || file.url.substring(file.url.lastIndexOf('/') + 1)
+      ]
     }
+  },
+  components: { PlusOutlined, LoadingOutlined, EyeOutlined, DeleteOutlined },
+  methods: {
+    previewFiles(event) {
+      console.log(event.target.files);
+   }
   }
 }
 </script>
 
 <template>
-  <div class="clearfix">
-    <a-upload
-      v-model:file-list="fileList"
-      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-      list-type="picture-card"
-      @preview="handlePreview"
-    >
-      <div v-if="fileList.length < 8">
-        <PlusOutlined />
-        <div style="margin-top: 8px">Upload</div>
+  <div v-for="file in fileList" :key="file.uid" class="m-1 overflow-hidden">
+    <div v-if="file.status == 'done'" class="border rounded-lg w-28 h-28 p-1">
+      <div
+        class="absolute text-white opacity-0 hover:opacity-100 hover:bg-black hover:bg-opacity-40 w-[102px] h-[102px] flex items-center justify-center [&>*]:m-2"
+      >
+        <EyeOutlined /><DeleteOutlined />
       </div>
-    </a-upload>
-    <a-modal
-      :open="previewVisible"
-      :title="previewTitle" 
-      :footer="null"
-      @cancel="handleCancel"
+      <img :src="file.url" />
+    </div>
+    <div
+      v-else-if="file.status == 'uploading'"
+      class="flex flex-col items-center justify-center w-28 h-28 border rounded-lg"
     >
-      <img alt="example" style="width: 100%" :src="previewImage" />
-    </a-modal>
+      Uploading <LoadingOutlined />
+    </div>
+    <div
+      v-else
+      class="border border-red-600 rounded-lg w-28 h-28 text-red-600 text-center items-center inline-grid"
+    >
+      Error
+    </div>
+  </div>
+  <div
+    @click="$refs.file.click()"
+    class="border border-dashed transition-all hover:border-blue-600 rounded-lg w-28 h-28 flex flex-col items-center justify-center m-1"
+  >
+    <input type="file" ref="file" style="display: none" @change="previewFiles"/>
+    <PlusOutlined />
+    Upload
   </div>
 </template>
 
