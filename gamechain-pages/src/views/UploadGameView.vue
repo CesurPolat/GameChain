@@ -26,15 +26,18 @@ export default {
   components: { PlusOutlined, LoadingOutlined, EyeOutlined, DeleteOutlined },
   mounted: async () => {},
   methods: {
+    
     previewFiles(event) {
       const reader = new FileReader()
       reader.addEventListener('load', async () => {
-        const cid = await fs.addBytes(Buffer.from(reader.result))
-        console.log(cid.bytes)
+        console.log(reader.result);
+        console.log("BR",Buffer.from(reader.result));
+        let cid = await fs.addBytes(Buffer.from(reader.result))
+        console.log(cid.toString());
         gun.get('CesurPolatGames').put({
-          file: [...cid.bytes]
+          file: cid.toString()
         })
-        this.fileList.push({ uid: 'sdsds', url: await s.get(cid), status: 'done' })
+        this.fileList.push({ uid: 'sdsds', url: reader.result, status: 'done' })
       })
       reader.readAsDataURL(event.target.files[0])
     }

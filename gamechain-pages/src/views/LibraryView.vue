@@ -5,26 +5,33 @@ import { CID } from 'multiformats/cid'
 import { Buffer } from 'buffer'
 import GUN from 'gun'
 let gun = GUN()
+
 const helia = await createHelia()
 const s = strings(helia)
 
-gun.get('CesurPolatGames').get("file").once(async (data)=>{
-  console.log(data);
-  //console.log(await s.get());
-  this.url="s"
-})
-
 export default{
   data(){
-    return {
-      url:''
+    return{
+      a:'a'
     }
+  },
+  methods:{
+    getBase64:async function(){
+      console.log(CID.parse("QmYNQJoKGNHTpPxCBPh9KkDpaExgd2duMa3aF6ytMpHdao").toV1());
+      let temp=await s.get(CID.parse("QmYNQJoKGNHTpPxCBPh9KkDpaExgd2duMa3aF6ytMpHdao").toV1())//Buffer.from().toString()
+      console.log( "?",temp );
+      //return temp
+    }
+  },
+  mounted:()=>{
+    gun.get("CesurPolatGames").get("file").once((data)=>{
+      console.log(data);
+    })
   }
 }
 </script>
 
 <template>
-  <img :src="url">
+  <img :src="a" alt="">
+  <button @click="getBase64">aaa</button>
 </template>
-
-<style></style>

@@ -1,3 +1,3 @@
 <script setup></script>
 
-<template>a</template>
+<template>Welcome</template>
