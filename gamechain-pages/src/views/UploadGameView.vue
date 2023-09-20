@@ -30,10 +30,10 @@ export default {
     previewFiles(event) {
       const reader = new FileReader()
       reader.addEventListener('load', async () => {
-        console.log(reader.result);
-        console.log("BR",Buffer.from(reader.result));
+        //console.log(reader.result);
+        //console.log("BR",Buffer.from(reader.result));
         let cid = await fs.addBytes(Buffer.from(reader.result))
-        console.log(cid.toString());
+        console.log("CID",cid.toString());
         gun.get('CesurPolatGames').put({
           file: cid.toString()
         })

@@ -17,8 +17,8 @@ export default{
   },
   methods:{
     getBase64:async function(){
-      console.log(CID.parse("QmYNQJoKGNHTpPxCBPh9KkDpaExgd2duMa3aF6ytMpHdao").toV1());
-      let temp=await s.get(CID.parse("QmYNQJoKGNHTpPxCBPh9KkDpaExgd2duMa3aF6ytMpHdao").toV1())//Buffer.from().toString()
+      console.log(CID.parse("Qma4hmeuaosUB9iBUXpx58N87gnNDG6eFXimtJTYA6BqcV"));
+      let temp=await s.get(CID.parse("Qma4hmeuaosUB9iBUXpx58N87gnNDG6eFXimtJTYA6BqcV"))//Buffer.from().toString()
       console.log( "?",temp );
       //return temp
     }

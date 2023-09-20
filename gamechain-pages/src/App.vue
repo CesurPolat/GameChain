@@ -13,6 +13,18 @@ let _localStorage
 onMounted(() => {
   _localStorage = localStorage
 })
+
+function closeApp() {
+  window.API.closeApp();
+}
+
+function minimizeApp() {
+  window.API.minimizeApp();
+}
+
+function fullscreenApp() {
+  window.API.fullscreenApp();
+}
 </script>
 
 <template>
@@ -24,9 +36,9 @@ onMounted(() => {
     <div>GameChain</div>
     <!-- TODO: inline-grid -->
     <div style="-webkit-app-region: no-drag" class="[&>*]:inline-grid [&>*]:items-center">
-      <button class="w-10 h-7 hover:bg-gray-400 hover:bg-opacity-40"><LineOutlined /></button>
-      <button class="w-10 h-7 hover:bg-gray-400 hover:bg-opacity-40"><BorderOutlined /></button>
-      <button class="w-10 h-7 hover:bg-red-600"><CloseOutlined /></button>
+      <button @click="minimizeApp" class="w-10 h-7 hover:bg-gray-400 hover:bg-opacity-40"><LineOutlined /></button>
+      <button @click="fullscreenApp" class="w-10 h-7 hover:bg-gray-400 hover:bg-opacity-40"><BorderOutlined /></button>
+      <button @click="closeApp" class="w-10 h-7 hover:bg-red-600"><CloseOutlined /></button>
     </div>
   </div>
   <div class="flex">
